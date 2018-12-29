@@ -22,12 +22,12 @@ export class RubyContribution extends BaseLanguageServerContribution {
     readonly name = RUBY_LANGUAGE_NAME;
 
     start(clientConnection: IConnection): void {
-        const command = 'solargraph';
+        const command = 'ruby_language_server';
         const args: string[] = [
-            'stdio'
+            // 'stdio'
         ];
         console.info("starting Ruby language server...")
-        
+
         const serverConnection = this.createProcessStreamConnection(command, args);
         // serverConnection.reader.onError(err => console.log(err));
         this.forward(clientConnection, serverConnection);
