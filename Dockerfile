@@ -1,5 +1,5 @@
-# docker build -t --rm theia-ruby .
-# docker run -d -v YOUR_RUBY_PROJECT_ROOT:/source -p 3000:3000 theia-ruby
+# docker build --rm -t theia-ruby .
+# docker run --rm -it -v RUBY_PROJECT_SOURCE_DIR:/source -p 3000:3000 theia-ruby
 # open http://localhost:3000/#/source
 FROM alpine
 
@@ -22,5 +22,12 @@ COPY . .
 
 RUN yarn
 
+# OK - let's plop down the ruby language source just so we have a real demo
+RUN apk add git
+WORKDIR /
+RUN git clone https://github.com/kwerle/ruby_language_server.git /source
+RUN chmod -R a-w /source
+
 WORKDIR /ruby-ide/theia-ruby-extension/browser-app
+
 CMD yarn start --hostname 0.0.0.0 /source
